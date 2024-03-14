@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:uber_shop_app/views/screens/auth/resiter_screen.dart';
+import 'package:uber_shop_app/Controllers/auth_controller.dart';
+import 'package:uber_shop_app/views/screens/auth/login_screen.dart';
 
-class LoginScreen extends StatelessWidget {
-  // LoginScreen({super.key});
+class ResiterScreen extends StatelessWidget {
+  // const ResiterScreen({super.key});
+  final AuthController _authController = AuthController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   late String email;
+  late String fullName;
   late String password;
 
   @override
@@ -19,21 +22,32 @@ class LoginScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Login Account',
+                'Resiter Account',
                 style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
                   letterSpacing: 4,
                 ),
               ),
+              CircleAvatar(
+                radius: 65,
+                child : Icon(
+                  Icons.person,
+                  size: 100,
+                  color: Colors.pink,
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
               TextFormField(
                 onChanged: (value) {
                   email = value;
                 },
                 validator: (value) {
-                  if (value!.isEmpty) {
+                  if(value!.isEmpty) {
                     return 'Please Email Address Must Not Be Empty';
-                  } else {
+                  }else{
                     return null;
                   }
                 },
@@ -41,6 +55,27 @@ class LoginScreen extends StatelessWidget {
                   labelText: 'Email Address',
                   hintText: 'Enter your email address',
                   prefixIcon: Icon(Icons.email, color: Colors.pink),
+                  // border: OutlineInputBorder(),
+                ),
+              ),
+              const SizedBox(
+                height: 25,
+              ),
+              TextFormField(
+                onChanged: (value) {
+                  fullName = value;
+                },
+                validator: (value) {
+                  if(value!.isEmpty) {
+                    return 'Please Full Name Must Not Be Empty';
+                  }else{
+                    return null;
+                  }
+                },
+                decoration: const InputDecoration(
+                  labelText: 'Full Name',
+                  hintText: 'Enter your Full Name',
+                  prefixIcon: Icon(Icons.person, color: Colors.pink),
                 ),
               ),
               const SizedBox(
@@ -51,9 +86,9 @@ class LoginScreen extends StatelessWidget {
                   password = value;
                 },
                 validator: (value) {
-                  if (value!.isEmpty) {
+                  if(value!.isEmpty) {
                     return 'Please Password Must Not Be Empty';
-                  } else {
+                  }else{
                     return null;
                   }
                 },
@@ -69,10 +104,10 @@ class LoginScreen extends StatelessWidget {
               InkWell(
                 onTap: () {
                   if(_formKey.currentState!.validate()) {
-                    print('Email: $email');
-                    print('Password: $password');
+                    _authController.createNewUser(email, fullName, password);
+                    print('success...');
                   }else{
-                    print('Unable to unauthenticate user...');
+                    print('invalid...');
                   }
                 },
                 child: Container(
@@ -84,7 +119,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                   child: Center(
                     child: Text(
-                      'Login',
+                      'Resiter',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 22,
@@ -95,26 +130,21 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              // InkWell(
-              //   child: Text(
-              //     'Need an account?',
-              //   ),
-              //   onTap: () {
-              //     print('Create an account...');
-              //   },
-              // ),
-              TextButton(
+              const SizedBox(
+                height: 25,
+              ),
+              TextButton (
                 onPressed: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => ResiterScreen(),
+                      builder: (context) =>  LoginScreen(),
                     ),
                   );
                 },
                 child: Text(
-                  'Need an account?',
+                  'Already have an account?',
                 ),
-              ),
+              )
             ],
           ),
         ),

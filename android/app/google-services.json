@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "677592659654",
+    "project_id": "store-9321c",
+    "storage_bucket": "store-9321c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:677592659654:android:41bd30a3e56326cddc09c7",
+        "android_client_info": {
+          "package_name": "com.example.uber_shop_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJOGoNtiaGFMUekjJKOpiUb2dcaiUUMuE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
