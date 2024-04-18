@@ -1,12 +1,64 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:uber_shop_app/Controllers/auth_controller.dart';
 import 'package:uber_shop_app/views/screens/auth/resiter_screen.dart';
 
-class LoginScreen extends StatelessWidget {
+import '../map_screen.dart';
+
+class LoginScreen extends StatefulWidget {
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  // 로그인 구현
+  final AuthController _authController = AuthController();
+
   // LoginScreen({super.key});
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   late String email;
+
   late String password;
+
+  bool _isLoading = false;
+
+  //로그인 유저
+  loginUser() async {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        _isLoading = true;
+      });
+      String res = await _authController.loginUser(email, password);
+      setState(() {
+        _isLoading = false;
+      });
+      if (res == 'success') {
+        setState(() {
+          _isLoading = false;
+        });
+        Get.to(MapScreen());
+        Get.snackbar(
+          'Login Success',
+          'You are logged in successfully',
+          backgroundColor: Colors.pink,
+          colorText: Colors.white,
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      } else {
+        setState(() {
+          _isLoading = false;
+        });
+        Get.snackbar(
+          'Login Failed',
+          res.toString(),
+          backgroundColor: Colors.pink,
+          colorText: Colors.white,
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,12 +120,7 @@ class LoginScreen extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
-                  if(_formKey.currentState!.validate()) {
-                    print('Email: $email');
-                    print('Password: $password');
-                  }else{
-                    print('Unable to unauthenticate user...');
-                  }
+                  loginUser();
                 },
                 child: Container(
                   height: 50,
@@ -83,15 +130,19 @@ class LoginScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Center(
-                    child: Text(
-                      'Login',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 22,
-                        letterSpacing: 4,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                    child: _isLoading
+                        ? CircularProgressIndicator(
+                            color: Colors.white,
+                          )
+                        : Text(
+                            'Login',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 22,
+                              letterSpacing: 4,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                   ),
                 ),
               ),
@@ -107,7 +158,7 @@ class LoginScreen extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => ResiterScreen(),
+                      builder: (context) => RegisterScreen(),
                     ),
                   );
                 },

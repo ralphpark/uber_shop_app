@@ -45,5 +45,18 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Uber Shop App needs access to your photo library</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Uber Shop App needs access to your camera</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Uber Shop App needs access to your microphone</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+    <string>This app needs access to location when open.</string>
+    <key>NSLocationTemporaryUsageDescriptionDictionary</key>
+    <dict>
+      <key>YourPurposeKey</key>
+      <string>The example App requires temporary access to the device&apos;s precise location.</string>
+    </dict>
 </dict>
 </plist>
